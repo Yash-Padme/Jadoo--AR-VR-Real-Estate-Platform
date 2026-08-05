@@ -3,6 +3,7 @@ import './Getstarted.css'
 import {useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
+import { apiUrl } from '../config/api';
 
 function Getstarted() {
     const [isSignUp, setIsSignUp] = useState(true);
@@ -48,7 +49,7 @@ function Getstarted() {
 
         try {
             // const response = await fetch(`https://jadoo-server.onrender.com/api/v1/users/login` || `http://localhost:8000/api/v1/users/login`,{
-               const response = await fetch(`http://localhost:8080/api/v1/users/login`,{
+              const response = await fetch(apiUrl("/api/v1/users/login"),{
             method: "POST",
             crossDomain: true,
             headers: {
@@ -84,7 +85,7 @@ function Getstarted() {
       e.preventDefault();
 
       try {
-          const response = await fetch( `http://localhost:8080/api/v1/users/register`, {
+            const response = await fetch(apiUrl("/api/v1/users/register"), {
 
               method: "POST",
               headers: {

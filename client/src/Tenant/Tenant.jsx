@@ -5,6 +5,7 @@ import Tenantcard from './Tenantcard'
 import Tenantcard1 from './Tenantcard1';
 import Tenantcard2 from './Tenantcard2';
 import { log } from 'three/src/utils.js';
+import { apiUrl } from '../config/api';
 function Tenant() {
 
     const {token} = useAuth();
@@ -14,7 +15,7 @@ function Tenant() {
     
     const getProperties = async()=>{
         try {
-            const response = await fetch("http://localhost:8080/api/v1/property/getAllProperties",{
+            const response = await fetch(apiUrl("/api/v1/property/getAllProperties"),{
                 method: "GET",
                 headers: {
                     'Authorization': `${token}`
