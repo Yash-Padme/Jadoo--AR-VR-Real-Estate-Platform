@@ -3,7 +3,6 @@ import bg from '../assets/Ownerbg.jpg';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { apiUrl } from '../config/api';
 
 function PropertyForm() {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -59,7 +58,8 @@ function PropertyForm() {
             formData.append("pincode", property.pincode);
             formData.append("VRImage", selectedImage);
 
-            const response = await fetch(apiUrl("/api/v1/property/addProperty"), {
+            // const response = await fetch(apiUrl("/api/v1/property/addProperty"), {
+              const response = await fetch(`https://jadoo-ar-vr-real-estate-platform.onrender.com/api/v1/property/addProperty` || `http://localhost:8000/api/v1/property/addProperty`, {
                 method: "POST",
                 crossDomain: true,
                 headers: {

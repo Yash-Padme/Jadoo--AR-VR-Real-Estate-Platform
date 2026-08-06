@@ -4,8 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import Tenantcard from './Tenantcard'
 import Tenantcard1 from './Tenantcard1';
 import Tenantcard2 from './Tenantcard2';
-import { log } from 'three/src/utils.js';
-import { apiUrl } from '../config/api';
+// import { log } from 'three/src/utils.js';
 function Tenant() {
 
     const {token} = useAuth();
@@ -15,15 +14,13 @@ function Tenant() {
     
     const getProperties = async()=>{
         try {
-            const response = await fetch(apiUrl("/api/v1/property/getAllProperties"),{
+            const response = await fetch("https://jadoo-ar-vr-real-estate-platform.onrender.com/api/v1/property/getAllProperties" || "http://localhost:8000/api/v1/property/getAllProperties",{
                 method: "GET",
                 headers: {
                     'Authorization': `${token}`
                 }
             })
             const res = await response.json();
-            console.log(res);
-            
             setProperties(res.data);
 
         } catch (error) {

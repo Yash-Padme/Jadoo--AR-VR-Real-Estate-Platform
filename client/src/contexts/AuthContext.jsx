@@ -1,59 +1,64 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { apiUrl } from "../config/api";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem("accessToken") || "");
+  const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(true);
 
-    const [token, setToken] = useState(localStorage.getItem('accessToken') || '');
-    const [user, setUser] = useState("");
-    const [loading, setLoading] = useState(true);  
+  const storeTokenInLS = (serverToken) => {
+    localStorage.setItem("accessToken", serverToken);
+    setToken(serverToken);
+  };
 
-    const storeTokenInLS = (serverToken) => {
-        localStorage.setItem('accessToken', serverToken);
-        setToken(serverToken);
+  let isLoggedIn = !!token;
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setToken("");
+  };
+
+  const userAuthentication = async () => {
+    try {
+      // const response = await fetch(apiUrl("/api/v1/users/user"), {
+      const response = await fetch(
+        "https://jadoo-ar-vr-real-estate-platform.onrender.com/api/v1/users/user" ||
+          "http://localhost:8000/api/v1/users/user",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${token}`,
+          },
+        },
+      );
+
+      if (response.ok) {
+        const userData = await response.json();
+        setUser(userData.data);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    let isLoggedIn = !!token;
+  useEffect(() => {
+    userAuthentication();
+  }, [token]);
 
-    const logout = () => {
-        localStorage.removeItem('accessToken');
-        setToken("");
-    }
+  return (
+    <AuthContext.Provider
+      value={{ storeTokenInLS, isLoggedIn, logout, user, loading, token }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-    const userAuthentication = async () => {
-        try {
-            const response = await fetch(apiUrl("/api/v1/users/user"), {
-                method: 'GET',
-                headers: {
-                    'Authorization': `${token}`
-                }                
-            });
-    
-            if (response.ok) {
-                const userData = await response.json();
-                setUser(userData.data);
-            } else {
-                setUser(null);
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false);  
-        }
-    };
-
-    useEffect(() => {
-        userAuthentication();
-    }, [token]);
-
-    return (
-        <AuthContext.Provider value={{ storeTokenInLS, isLoggedIn, logout, user, loading, token }}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
-
-export const useAuth = ()=>{
-    return useContext(AuthContext);
-}
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
