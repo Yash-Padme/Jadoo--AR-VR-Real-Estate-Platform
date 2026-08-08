@@ -33,5 +33,5 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
-            --data '{"serviceId": "cp141ao21fec738emjng", "clearCache": false}' \
-            https://api.render.com/v1/services/YOUR_SERVICE_ID/deploys
+            --data '{"serviceId": "srv-d9phmbgae00c73f3bfbg", "clearCache": false}' \
+            https://api.render.com/v1/services/srv-d9phmbgae00c73f3bfbg/deploys
