@@ -33,7 +33,7 @@ function Tenantcard1() {
         </div>
         <div className='xl:w-58% w-90% flex flex-col justify-start items-start xl:justify-start gap-4'>
           <p className='text-2xl font-bold'>College</p>
-          <p className='text-xl font-semibold'>IIIT NAYA Raipur</p>
+          <p className='text-xl font-semibold'>IIIT Gwalior</p>
 
           <div className="flex bg-gray-200 p-2 justify-between rounded-md w-full lg:flex-row flex-col">
             <div className="flex items-center">
