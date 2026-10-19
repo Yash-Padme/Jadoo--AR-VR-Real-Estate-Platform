@@ -48,7 +48,7 @@ function Getstarted() {
 
         try {
             const response = await fetch(`https://jadoo-ar-vr-real-estate-platform.onrender.com/api/v1/users/login` || `http://localhost:8000/api/v1/users/login`,{
-              // const response = await fetch(apiUrl("/api/v1/users/login"),{
+
             method: "POST",
             crossDomain: true,
             headers: {

@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
+// Configure Cloudinary using credentials provided through environment variables.
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -14,19 +15,23 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localFilePath) => {
   try {
+    // Skip the upload when no temporary local file was created.
     if (!localFilePath) return null;
     console.log(process.env.CLOUDINARY_API_KEY);
 
+    // Upload the file and let Cloudinary detect its resource type.
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
     });
 
     // fs.unlinkSync(localFilePath);
+    // Remove the temporary file after a successful upload.
     if (fs.existsSync(localFilePath)) {
       fs.unlinkSync(localFilePath);
     }
     return response;
   } catch (error) {
+    // Log the upload failure, clean up the temporary file, and preserve the error.
     console.error("Cloudinary Upload Error:", error);
 
     if (localFilePath && fs.existsSync(localFilePath)) {

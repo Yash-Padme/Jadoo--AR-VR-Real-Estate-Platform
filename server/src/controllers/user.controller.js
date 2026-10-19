@@ -4,6 +4,8 @@ import {ApiResponse} from '../utils/ApiResponse.js';
 import {User} from '../models/user.model.js';
 import emailValidator from 'email-validator';
 
+// Helper to generate both access and refresh tokens for a user,
+// and save the refresh token into the database for later validation.
 const generateAccessAndRefreshToken = async(userId)=>{
     try {
         const user = await User.findById(userId);
@@ -24,10 +26,12 @@ const generateAccessAndRefreshToken = async(userId)=>{
     }
 }
 
+// Register a new user and immediately issue auth tokens.
 const registerUser = asyncHandler(async (req,res)=>{
  
     const {email, userName, password} = req.body;
 
+    // Validate required fields before creating the user.
     if( !email || !userName || !password ){
         return res
         .status(400)
@@ -36,6 +40,7 @@ const registerUser = asyncHandler(async (req,res)=>{
         )
     }
 
+    // Email format validation.
     if (!emailValidator.validate(email)) {
         return res
         .status(400)
@@ -44,6 +49,7 @@ const registerUser = asyncHandler(async (req,res)=>{
         )
     }
 
+    // Password strength check.
     if(password.length<8){
         return res
         .status(400)
@@ -52,6 +58,7 @@ const registerUser = asyncHandler(async (req,res)=>{
         )
     }
 
+    // Prevent duplicate accounts with the same email or username.
     const existedUser = await User.findOne({
         $or: [{email}, {userName}]
     })
@@ -64,12 +71,14 @@ const registerUser = asyncHandler(async (req,res)=>{
         )
     }
 
+    // Create the user in MongoDB.
     const user = await User.create({
         email,
         password,
         userName,
     })
 
+    // Fetch the created user without exposing password or refresh token.
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
     )
@@ -82,6 +91,7 @@ const registerUser = asyncHandler(async (req,res)=>{
         )
     }
 
+    // Generate tokens and attach them as cookies.
     const {accessToken, refreshToken} = await generateAccessAndRefreshToken(createdUser._id);
     
     const options = {
@@ -102,10 +112,12 @@ const registerUser = asyncHandler(async (req,res)=>{
     );
 })
 
+// Login an existing user and return fresh auth tokens.
 const logInUser = asyncHandler(async(req,res)=>{
 
     const {email, password} = req.body;
 
+    // Validate email field before lookup.
     if (!emailValidator.validate(email)) {
         return res
         .status(400)
@@ -122,6 +134,7 @@ const logInUser = asyncHandler(async(req,res)=>{
         )
     }
 
+    // Find user by email.
     const user = await User.findOne({email})
 
     if(!user){
@@ -135,6 +148,7 @@ const logInUser = asyncHandler(async(req,res)=>{
         )
     }
 
+    // Ensure password is provided before checking.
     if(!password){
         return res
         .status(401)
@@ -146,6 +160,7 @@ const logInUser = asyncHandler(async(req,res)=>{
         )
     }
 
+    // Compare the submitted password with the stored hash.
     const isPasswordValid = await user.isPasswordCorrect(password);
 
     if(!isPasswordValid){
@@ -159,9 +174,10 @@ const logInUser = asyncHandler(async(req,res)=>{
         )
     }
 
-
+   // Issue new tokens after successful login.
    const {accessToken, refreshToken} = await generateAccessAndRefreshToken(user._id);
 
+   // Remove sensitive fields from the user payload returned to the client.
    const loggedInUser = await User.findById(user._id) .select("-password -refreshToken");
 
    const options = {
@@ -184,6 +200,7 @@ const logInUser = asyncHandler(async(req,res)=>{
 
 })
 
+// Log out the current user by clearing the refresh token and auth cookies.
 const logOutUser = asyncHandler(async(req, res)=>{
     await User.findByIdAndUpdate(req.user._id, {
         $unset: {
@@ -206,6 +223,7 @@ const logOutUser = asyncHandler(async(req, res)=>{
     .json(new ApiResponse(200, {}, "User logged Out!!"))
 })
 
+// Return the currently authenticated user details from the request context.
 const currentUser = asyncHandler(async(req,res)=>{
     try {
         const userData = req.user;

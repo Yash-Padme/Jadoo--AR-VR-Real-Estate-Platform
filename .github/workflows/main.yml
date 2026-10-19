@@ -30,7 +30,7 @@ jobs:
       - name: Deploy to Render
         run: |
           curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
             --data '{"serviceId": "srv-d9phmbgae00c73f3bfbg", "clearCache": false}' \

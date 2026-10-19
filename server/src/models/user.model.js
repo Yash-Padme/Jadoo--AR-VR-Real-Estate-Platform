@@ -2,7 +2,9 @@ import {Schema, model} from 'mongoose'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// Defines the data stored for each registered user.
 const userSchema = new Schema({
+  // Username is normalized and indexed for fast, case-insensitive lookups.
   userName: {
     type: String,
     required: true,
@@ -11,6 +13,7 @@ const userSchema = new Schema({
     trim: true, 
     index: true
   },
+  // Email is unique so one email address cannot create multiple accounts.
   email: { 
     type: String, 
     required: true, 
@@ -18,15 +21,18 @@ const userSchema = new Schema({
     lowecase: true, 
     trim: true,  
   }, 
+  // Passwords are hashed before being saved; plain-text passwords are never stored.
   password: {
     type: String,
     required: [true, "Password is required!!"],
   },
+  // Stores the refresh token used to obtain a new access token.
   refreshToken: {
     type: String
   },
 },{timestamps: true})
 
+// Hash the password only when it is new or has been changed.
 userSchema.pre("save", async function (next) {
   if(!this.isModified("password")) return next();
 
@@ -34,10 +40,12 @@ userSchema.pre("save", async function (next) {
   next()
 })
 
+// Compare a supplied password with the stored hash during login.
 userSchema.methods.isPasswordCorrect = async function(password){
   return await bcrypt.compare(password, this.password);
 }
 
+// Create a short-lived access token containing the user's identity and role.
 userSchema.methods.generateAccessToken = function(){
   return jwt.sign({
     _id: this._id,
@@ -51,6 +59,7 @@ userSchema.methods.generateAccessToken = function(){
   })
 }
 
+// Create a refresh token that can be used to renew the access token.
 userSchema.methods.generateRefreshToken = function(){
   return jwt.sign({
     _id: this._id,
@@ -61,4 +70,5 @@ userSchema.methods.generateRefreshToken = function(){
   })
 }
 
+// Export the model used to create and authenticate users.
 export const User = model("User", userSchema)

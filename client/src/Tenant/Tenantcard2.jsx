@@ -26,23 +26,25 @@ function Tenantcard2() {
   const image = lec2;
 
   return (
-    <div className='w-[90vw] bg-tertiary flex justify-center py-8 mx-auto'>
-      <div className='sm:w-85vw w-95vw p-4 bg-white rounded-3xl flex flex-col justify-center gap-8 items-center xl:h-400px font-playfair shadow-2xl xl:flex-row h-auto'>
-        <div className='lg:w-35% sm:w-60% w-95% rounded-3xl flex items-center justify-start'>
-          <img src={image} className='h-[350px] w-[380px] rounded-3xl' alt="" />
+<div className='w-[90vw] bg-tertiary flex justify-center py-8 mx-auto'>
+      <div className='sm:w-[85vw] w-[95vw] p-4 bg-white rounded-3xl flex flex-col justify-center gap-8 items-center xl:h-[400px] font-playfair shadow-2xl xl:flex-row h-auto'>
+        <div className='lg:w-[35%] sm:w-[60%] w-[95%] rounded-3xl flex items-center justify-start'>
+          {/* Added object-cover to the image */}
+          <img src={image} className='h-[350px] w-[380px] rounded-3xl object-cover' alt="" />
         </div>
+
         <div className='xl:w-58% w-90% flex flex-col justify-start items-start xl:justify-start gap-4'>
-          <p className='text-2xl font-bold'>Lab</p>
-          <p className='text-xl font-semibold'>Samta Colony</p>
+          <p className='text-2xl font-bold'>IIITM CDP Cell</p>
+          <p className='text-xl font-semibold'>Generic Computer Lab</p>
 
           <div className="flex bg-gray-200 p-2 justify-between rounded-md w-full lg:flex-row flex-col">
             <div className="flex items-center">
               <img src={logo1} alt="" />
-              <strong className="md:ml-2">Plot Area:</strong>&nbsp;28 sq. ft.
+              <strong className="md:ml-2">Plot Area:</strong>&nbsp;4000 sq. ft.
             </div>
             <div className="flex items-center">
               <img src={logo} alt="" />
-              <strong className="md:ml-2">Average Price:</strong>&nbsp;$100,000
+              <strong className="md:ml-2">Average Price:</strong>&nbsp;₹50,00000
             </div>
             <div className="flex items-center">
               <img src={logo} alt="" />
