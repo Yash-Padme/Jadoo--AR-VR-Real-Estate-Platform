@@ -23,8 +23,8 @@ export const AuthProvider = ({ children }) => {
     try {
       // const response = await fetch(apiUrl("/api/v1/users/user"), {
       const response = await fetch(
-        "https://jadoo-ar-vr-real-estate-platform.onrender.com/api/v1/users/user" ||
-        "http://localhost:8000/api/v1/users/user",
+        `https://jadoo-ar-vr-real-estate-platform.onrender.com/api/v1/users/user` ||
+        `http://localhost:8000/api/v1/users/user`,
         {
           method: "GET",
           headers: {
