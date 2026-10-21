@@ -1,10 +1,18 @@
-# 🏡 Jadoo - Smart Real Estate Platform
+# 🏡 Jadoo - Smart rental discovery and locality intelligence
 
 > *A platform to discover, explore, and connect with rental properties and homes across cities through AI-driven housing intelligence, True-Cost analysis, and immersive 360° AR/VR tours.*
 
+## 🌐 Live Demo & Video Walkthrough
+
+- **🚀 Live Demo:** [Try Jadoo](https://jadoo-ar-vr-real-estate-platform-frontend.onrender.com)
+- **🎥 YouTube Demo:** [Watch the Project Walkthrough](YOUR_YOUTUBE_VIDEO_LINK)
+
+Explore Jadoo's property discovery, True Monthly Cost calculations, immersive 360° VR tours, property shortlisting, and AI-powered property assistant.
+
 ## 📌 Table of Contents
 
-- [🏡 Jadoo - Smart Real Estate Platform](#-jadoo---smart-real-estate-platform)
+- [🏡 Jadoo - Smart rental discovery and locality intelligence](#-jadoo---smart-rental-discovery-and-locality-intelligence)
+  - [🌐 Live Demo \& Video Walkthrough](#-live-demo--video-walkthrough)
   - [📌 Table of Contents](#-table-of-contents)
   - [📖 Overview](#-overview)
   - [🎯 Problem Statement](#-problem-statement)
@@ -20,10 +28,10 @@
     - [2. API \& Business Logic Layer](#2-api--business-logic-layer)
     - [3. External Services \& Storage](#3-external-services--storage)
   - [📂 Project Structure](#-project-structure)
-  - [⚙️ Getting Started](#️-getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-  - [🔐 Environment Variables](#-environment-variables)
+- [Install backend dependencies](#install-backend-dependencies)
+- [Install frontend dependencies](#install-frontend-dependencies)
+- [Run in development mode with nodemon](#run-in-development-mode-with-nodemon)
+- [Or run in standard mode](#or-run-in-standard-mode)
   - [📡 API Documentation](#-api-documentation)
     - [1. User Authentication (`/api/v1/users`)](#1-user-authentication-apiv1users)
     - [2. Properties \& Discovery (`/api/v1/property`)](#2-properties--discovery-apiv1property)
@@ -74,7 +82,7 @@ Relocating to or searching for rental homes in unfamiliar cities comes with sign
 
 ## 🖼️ Screenshots
 
-> *Replace the placeholder paths below with actual screenshots from your `images/` directory.*
+<!-- > *Replace the placeholder paths below with actual screenshots from your `images/` directory.* -->
 
 | Landing Page & Hero | Property Discovery & Filters |
 | :---: | :---: |
@@ -255,10 +263,10 @@ flowchart TD
     class DOCFILES,WORKFLOWS,CPKG,HTML,MANIFEST,NAVBAR,CHAT,AUTH,FORM,HOME,START,TENANTPAGE,CARD,SPKG,UC,PC,SC,AC,DBINDEX,AUTHMW,MULTER,UM,PM,UPM,SM,UR,PR,SR,AR,APIERR,APIRES,ASYNC,CLOUD,COST,SAPP,SINDEX,APP,INDEX,README file
 ```
 
-<!-- Plaintext
+Plaintext
 ```text
 Jadoo--AR-VR-Real-Estate-Platform/
-├── 
+├──  docs/                              # PRD documentation
 ├── .github/
 │   └── workflows/                     # GitHub Actions CI/CD pipelines
 ├── client/                            # React Frontend Application
@@ -316,7 +324,7 @@ Jadoo--AR-VR-Real-Estate-Platform/
 │   │   └── index.js                   # Server entrypoint
 │   └── package.json                   # Backend dependencies & scripts
 └── README.md                          # Project documentation
-``` -->
+``` -
 
 ## ⚙️ Getting Started
 
